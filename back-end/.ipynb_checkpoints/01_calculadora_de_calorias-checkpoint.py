@@ -1,6 +1,3 @@
-import csv
-from datetime import datetime
-
 print("=== BEM-VINDO AO GIGO-APP (Módulo de Saúde) ===")
 
 # BLOCO 1: Coleta de dados
@@ -39,7 +36,7 @@ else:
 
 # BLOCO 3: Cálculo da Taxa Metabólica Basal (TMB)
 
-basal_m = 88.362 + (13.397 * peso) + (4.799 * altura_cm) - (5.677 * idade)
+basal_m = 88.369 + (13.397 * peso) + (4.799 * altura_cm) - (5.677 * idade)
 
 basal_f = 447.593 + (9.247 * peso) + (3.098 * altura_cm) - (4.330 * idade)
 
@@ -77,40 +74,3 @@ print(f"➔ IMC: {imc:.2f} ({classificacao_imc})")
 print(f"➔ Taxa Metabólica Basal (TMB): {tmb:.2f} kcal")
 print(f"➔ Gasto Energético Total Diário (GET): {get:.2f} kcal")
 print("=======================================")
-
-# ==========================================
-# 6. Persistência de Dados (Salvando no CSV)
-# ==========================================
-
-# Pegando a data atual do computador formateada (ex: 04/07/2026)
-data_atual = datetime.now().strftime("%d/%m/%Y")
-
-# Nome do arquivo onde salvaremos o histórico
-arquivo_csv = "back-end/historico_pacientes.csv"
-
-# Abrindo o arquivo em modo 'a' (append/anexar). 
-# Se o arquivo não existir, o Python cria ele automaticamente.
-with open(arquivo_csv, mode="a", newline="", encoding="utf-8") as arquivo:
-    escritor = csv.writer(arquivo, delimiter=";")
-    
-    # Se o arquivo acabou de ser criado (está vazio), precisamos escrever o cabeçalho primeiro
-    # Para saber se está vazio, verificamos a posição do ponteiro do arquivo
-    if arquivo.tell() == 0:
-        escritor.writerow(["Data", "Nome", "Idade", "Peso", "Altura", "Sexo", "IMC", "Classificacao_IMC", "TMB", "GET"])
-    
-    # Escrevendo a nova linha com os dados do paciente atual
-    escritor.writerow([
-        data_atual, 
-        name, 
-        telefone, 
-        idade, 
-        peso, 
-        altura_cm, 
-        sexo.upper(), 
-        f"{imc:.2f}", 
-        classificacao_imc, 
-        f"{tmb:.2f}", 
-        f"{get:.2f}"
-    ])
-
-print(f"\n[Sucesso] Dados de {name} salvos permanentemente no histórico!")
